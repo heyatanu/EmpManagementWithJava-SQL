@@ -27,13 +27,13 @@ public class Admin {
       //STEP 4: Execute a query
       stmt = conn.createStatement();
 
+
       String sql = "INSERT INTO emp " +
         "VALUES (" + empid + ",'" + empname + "'," + empage + ",'" + empaddress + "'," + emptotalpresent + "," +
         emptotalabsent + "," + emptotalhalfday + ",'" + empdepartment + "','" + empprojectassinetitle + "','" +
         empprojectassinedis + "','" +
         empprojectstartdate + "','" + empprojectenddate + "'," +
         emptotalcompleteproject + "," + empratting + "," + empsalary + "," + empbonous + ")";
-
       stmt.executeUpdate(sql);
       System.out.println("\n\tEmployee ID " + empid + " inserted into the table Successfull..");
 
@@ -337,5 +337,72 @@ public class Admin {
       }
     }
   }
+  
+  
+  
+  public static boolean AdminCheck(String username, String UPassword) {
+	  username=username.toLowerCase();
+	  username=username.trim();
+	    Connection conn = null;
+	    Statement stmt = null;
+	    try {
+
+	      Class.forName("com.mysql.jdbc.Driver");
+
+	      System.out.println("\n\tConnecting to database...");
+	      conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	      System.out.println("\n\tCheck the admin status ...");
+	      //STEP 4: Execute a query
+	      stmt = conn.createStatement();
+	      String sql = "select * from admin where adminname='" + username + "'";
+	      ResultSet rs = stmt.executeQuery(sql);
+	      int c = 0;
+	      while (rs.next()) {
+	        c = c + 1;
+	      }
+	      if (c == 0) {
+	        System.out.println("\n\t ADMIN NOT FOUND");
+	        return false;
+	      } else {
+	        sql = "select * from admin where adminname='" + username + "'";
+	        rs = stmt.executeQuery(sql);
+	        while (rs.next()) {
+
+	          String adminname = rs.getString("adminname");
+	          String password = rs.getString("password");
+	          if (username.equals(adminname)) {
+	            if (UPassword.equals(password)) {
+	              System.out.println("\nSUCCESSFULL LOGIN");
+	              return true;
+	            } else {
+	              System.out.println("\n\t WRONG PASSWORD");
+	              return false;
+	            }
+	          }
+
+	        }
+	      }
+
+	    } catch (SQLException se) {
+
+	      System.out.println("\n\tSQL ERROR");
+	    } catch (Exception e) {
+	      //Handle errors for Class.forName
+	      System.out.println("\n\tERROR OCCERS");
+	    } finally {
+	      //finally block used to close resources
+	      try {
+	        if (stmt != null)
+	          conn.close();
+	      } catch (SQLException se) {} // do nothing
+	      try {
+	        if (conn != null)
+	          conn.close();
+	      } catch (SQLException se) {
+	        System.out.println("\n\tSQL ERROR");
+	      }
+	    }
+	    return false;
+	  }
 
 } //ADMIN CLASS

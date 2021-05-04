@@ -35,7 +35,6 @@ public class TableCreate {
         " emptotalpresent INTEGER(20), " +
         " emptotalabsent INTEGER(20), " +
         " emptotalhalfday INTEGER(20), " +
-        " empdepartmentid INTEGER(10), " +
         " empdepartment VARCHAR(10), " +
         " empprojectassinetitle VARCHAR(100), " +
         " empprojectassinedis VARCHAR(1000), " +

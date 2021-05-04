@@ -14,6 +14,12 @@ public class Employee {
       if (s.equals("0")) {
         break;
       } else if (s.equals("admin")) {
+    	  
+    	  System.out.print("\n Enter username -");
+          String un = in .next();
+    	  System.out.print("\n Enter password -");
+          String pass = in .next();
+    	  if(Admin.AdminCheck(un, pass)) {
         System.out.println("\n\t WELCOME TO ADMIN PANAL (Double check before do anything this panal is sensitive)");
 
         while (true) {
@@ -62,7 +68,8 @@ public class Employee {
             System.out.println("\n\tINVALID...");
             break;
           }
-        }
+        }}
+    	
       } //for admin else
       else if (s.equals("createtable")) {
         TableCreate.Create();
