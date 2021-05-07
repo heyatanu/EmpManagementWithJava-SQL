@@ -115,7 +115,7 @@ public class Admin {
         //STEP 4: Execute a query
         System.out.print("\n\t1.Update the employee name\n\t2.Update the employee age\n\t3.Update the employee address" +
           "\n\t4.Update the employee total no of present day\n\t5.Update the employee total no of absent day\n\t6.Update the employee total no of half day" +
-          "\n\t7.Update the employee department\n\t8.Update the employee project title\n\t9.Update the employee project discription" +
+          "\n\t7.Update the employee department\n\t8.Update the employee project title\n\t9.Update the employee mail id" +
           "\n\t10.Update the employee projest assine date\n\t11.Update the employee project deadline" +
           "\n\t12.Update the employee number of completed projects\n\t13.Update the employee ratting\n\t14.Update the employee salary\n\t15.Update the employee bonous");
         System.out.print("\nUpdate records into the table...\nEnter the upate value no-");
@@ -183,12 +183,12 @@ public class Admin {
           stmt.executeUpdate(sql);
           System.out.println("\n\tEmployee project title for employee id " + passid + " updated to " + val + "   Successfull...");
         } else if (ch == 9) {
-          System.out.print("Enter employee project discription for update-");
+          System.out.print("Enter employee mailid for update-");
           val = in .next();
           stmt = conn.createStatement();
           String sql = "UPDATE emp SET empprojectassinedis = '" + val + "' WHERE empid=" + passid;
           stmt.executeUpdate(sql);
-          System.out.println("\n\tEmployee project discription for employee id " + passid + " updated to " + val + "   Successfull...");
+          System.out.println("\n\tEmployee mailid for employee id " + passid + " updated to " + val + "   Successfull...");
         } else if (ch == 10) {
           System.out.print("Enter employee project start date for update-");
           val = in .next();
@@ -299,12 +299,13 @@ public class Admin {
         System.out.println("Address:- " + empaddress);
         System.out.println("Age:- " + empage);
         System.out.println("Department:- " + empdepartment);
+        System.out.println("Mail id:- " + empprojectassinedis);
         System.out.println("Total number of present days:- " + emptotalpresent);
         System.out.println("Total number of absent days:- " + emptotalabsent);
         System.out.println("Total number of half days:- " + emptotalhalfday);
         System.out.println("Here are the project info:-");
         System.out.println("Project title:- " + empprojectassinetitle);
-        System.out.println("Project discription:- " + empprojectassinedis);
+        
         System.out.println("Project assined date:- " + empprojectstartdate);
         System.out.println("Project dead line :- " + empprojectenddate);
         System.out.println("Total project complete :- " + emptotalcompleteproject);
@@ -338,6 +339,84 @@ public class Admin {
     }
   }
   
+  
+  
+  public static void ShowAllEmp() { // DISPLAY THE AVALABLE MOVIE LIST 
+	    Connection conn = null;
+	    Statement stmt = null;
+	    try {
+
+	      Class.forName("com.mysql.jdbc.Driver");
+
+	      System.out.println("\n\tConnecting to database...");
+	      conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	      System.out.println("\n\tFetching data from database...\n");
+	      stmt = conn.createStatement();
+	      String sql;
+	      sql = "SELECT * FROM emp ";
+	      ResultSet rs = stmt.executeQuery(sql);
+	      while (rs.next()) {
+	        int empid = rs.getInt("empid");
+	        String empname = rs.getString("empname");
+	        int empage = rs.getInt("empage");
+	        String empaddress = rs.getString("empaddress");
+	        int emptotalpresent = rs.getInt("emptotalpresent");
+	        int emptotalabsent = rs.getInt("emptotalabsent");
+	        int emptotalhalfday = rs.getInt("emptotalhalfday");
+	        String empdepartment = rs.getString("empdepartment");
+	        String empprojectassinetitle = rs.getString("empprojectassinetitle");
+	        String empprojectassinedis = rs.getString("empprojectassinedis");
+	        String empprojectstartdate = rs.getString("empprojectstartdate");
+	        String empprojectenddate = rs.getString("empprojectenddate");
+	        int emptotalcompleteproject = rs.getInt("emptotalcompleteproject");
+	        int empratting = rs.getInt("empratting");
+	        int empsalary = rs.getInt("empsalary");
+	        int empbonous = rs.getInt("empbonous");
+
+	        System.out.println("\n\tID:- " + empid);
+	        System.out.println("Name:- " + empname);
+	        System.out.println("Address:- " + empaddress);
+	        System.out.println("Age:- " + empage);
+	        System.out.println("Department:- " + empdepartment);
+	        System.out.println("Mail id:- " + empprojectassinedis);
+	        System.out.println("Total number of present days:- " + emptotalpresent);
+	        System.out.println("Total number of absent days:- " + emptotalabsent);
+	        System.out.println("Total number of half days:- " + emptotalhalfday);
+	        System.out.println("Here are the project info:-");
+	        System.out.println("Project title:- " + empprojectassinetitle);
+	        
+	        System.out.println("Project assined date:- " + empprojectstartdate);
+	        System.out.println("Project dead line :- " + empprojectenddate);
+	        System.out.println("Total project complete :- " + emptotalcompleteproject);
+	        System.out.println("Ratting");
+	        for (int i = 0; i < empratting; i++) {
+	          System.out.print("*");
+	        }
+	        System.out.println("\nEmployee Salary :- " + empsalary);
+	        System.out.println("Employee Bonous:- " + empbonous + "\n\n");
+
+	      }
+	      rs.close();
+	      stmt.close();
+	      conn.close();
+	      System.out.println("\n\tEND");
+	    } catch (SQLException se) {
+	      System.out.println("\n\tSQL ERROR");
+	    } catch (Exception e) {
+	      System.out.println("\n\tERROR OCCERS");
+	    } finally {
+	      try {
+	        if (stmt != null)
+	          stmt.close();
+	      } catch (SQLException se2) {}
+	      try {
+	        if (conn != null)
+	          conn.close();
+	      } catch (SQLException se) {
+	        System.out.println("\n\tSQL ERROR");
+	      }
+	    }
+	  }
   
   
   public static boolean AdminCheck(String username, String UPassword) {

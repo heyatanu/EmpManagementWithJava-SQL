@@ -45,13 +45,14 @@ public class ShowEmployee {
         System.out.println("Name:- " + empname);
         System.out.println("Address:- " + empaddress);
         System.out.println("Age:- " + empage);
+        System.out.println("Mail id:- " + empprojectassinedis);
         System.out.println("Department:- " + empdepartment);
         System.out.println("Total number of present days:- " + emptotalpresent);
         System.out.println("Total number of absent days:- " + emptotalabsent);
         System.out.println("Total number of half days:- " + emptotalhalfday);
         System.out.println("Here are the project info:-");
         System.out.println("Project title:- " + empprojectassinetitle);
-        System.out.println("Project discription:- " + empprojectassinedis);
+        
         System.out.println("Project assined date:- " + empprojectstartdate);
         System.out.println("Project dead line :- " + empprojectenddate);
         if (emptotalcompleteproject == 0) {
@@ -131,4 +132,55 @@ public class ShowEmployee {
     }
     return c;
   }
+  
+  
+  
+  public static boolean CheckPass(String Epass,int passid) { // DISPLAY THE AVALABLE MOVIE LIST 
+	    Connection conn = null;
+	    Statement stmt = null;
+	    String crpass="";
+	    try {
+
+	      Class.forName("com.mysql.jdbc.Driver");
+	      conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	      stmt = conn.createStatement();
+	      String sql;
+
+	      sql = "SELECT * FROM emp where empid=" + passid;
+	      ResultSet rs = stmt.executeQuery(sql);
+	      while (rs.next()) {
+	    	  String empdepartment = rs.getString("empdepartment");
+	          String empaddress = rs.getString("empaddress");
+	          empaddress=empaddress.toLowerCase();
+	          crpass=crpass+empaddress+empdepartment;
+//	          System.out.print(crpass);
+	      }
+	      rs.close();
+	      stmt.close();
+	      conn.close();
+
+	    } catch (SQLException se) {
+	      System.out.println("\n\tSQL ERROR");
+	    } catch (Exception e) {
+	      System.out.println("\n\tERROR OCCERS");
+	    } finally {
+	      try {
+	        if (stmt != null)
+	          stmt.close();
+	      } catch (SQLException se2) {}
+	      try {
+	        if (conn != null)
+	          conn.close();
+	      } catch (SQLException se) {
+	        System.out.println("\n\tSQL ERROR");
+	      }
+	    }
+	    crpass=crpass.toLowerCase();
+	    if (crpass.equals(Epass)) {
+	    	return true;
+	    }
+	    return false;
+	  }
+
+
 }
