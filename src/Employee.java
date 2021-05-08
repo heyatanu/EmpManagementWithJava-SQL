@@ -15,9 +15,9 @@ public class Employee {
         break;
       } else if (s.equals("admin")) {
     	  
-    	  System.out.print("\n Enter username -");
+    	  System.out.print("\n Enter username(Case sensitive) -");
           String un = in .next();
-    	  System.out.print("\n Enter password -");
+    	  System.out.print("\n Enter password(Case sensitive) -");
           String pass = in .next();
     	  if(Admin.AdminCheck(un, pass)) {
         System.out.println("\n\t WELCOME TO ADMIN PANAL (Double check before do anything this panal is sensitive)");
@@ -25,7 +25,7 @@ public class Employee {
         while (true) {
           System.out.print("\n\tADMIN\n\t1.Add a new employee \n\t2.Remove employee\n\t3.Search with ID\n\t4.Update employee details\n\t5.Display all employee\n\t0.Exit");
           try {
-            System.out.print("\n Enter your interest -");
+            System.out.print("\n Enter your interest(Admin) -");
             int AoptionCh = in .nextInt();
             if (AoptionCh == 1) {
               int random_id = (int)(1000 * Math.random());
@@ -70,12 +70,18 @@ public class Employee {
               try {
                 System.out.print("\nEnter the id of employee you want to delete - ");
                 int checksts = in .nextInt();
-                Admin.Delete(checksts);
+                if (ShowEmployee.Check(checksts)==1) {
+                	 Admin.Delete(checksts);
+                }
+               else {
+            	   System.out.println("\nNot found...");
+               }
               } catch (Exception e) {
                 System.out.println("\n\tINVALID...");
                 break;
               }
             } else if (AoptionCh == 3) {
+            	try {
               System.out.print("\nEnter the id of employee you want to check - ");
               int checksts = in .nextInt();
               if (ShowEmployee.Check(checksts) == 1) {
@@ -83,6 +89,10 @@ public class Employee {
               } else {
                 System.out.println("NO EMPLOYEE FOUND ");
               }
+            	}catch (Exception e) {
+                    System.out.println("\n\tINVALID...");
+                    break;
+                  }
             } else if (AoptionCh == 4) {
               try {
                 System.out.print("\nEnter the id of employee you want to update - ");
@@ -141,6 +151,7 @@ public class Employee {
 
   }
 
+@SuppressWarnings("unused")
 private static void nextLine() {
 	// TODO Auto-generated method stub
 	
